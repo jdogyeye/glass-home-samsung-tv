@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Runs the real launcher code (android-tv/launcher/src) on Robolectric's
+  Android framework and renders the screen to PNGs. Run android-tv/dev/render.sh,
+  which builds the app first (for its compiled resources and assets).
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>app.glasshome</groupId>
+  <artifactId>glass-home-render-test</artifactId>
+  <version>1</version>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>17</maven.compiler.release>
+  </properties>
+
+  <dependencies>
+    <!-- Compile-time API only (the shadows need Android 14's classes); Robolectric
+         loads its instrumented copy at run time. The APK itself is built against
+         API 23 by build.sh, so the launcher can't use anything newer by accident. -->
+    <dependency>
+      <groupId>org.robolectric</groupId>
+      <artifactId>android-all</artifactId>
+      <version>14-robolectric-10818077</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.robolectric</groupId>
+      <artifactId>robolectric</artifactId>
+      <version>4.17</version>
+      <scope>test</scope>
+      <!-- Only on Google's Maven; not needed for plain Robolectric tests. -->
+      <exclusions>
+        <exclusion><groupId>androidx.test</groupId><artifactId>monitor</artifactId></exclusion>
+        <exclusion><groupId>androidx.test.espresso</groupId><artifactId>espresso-idling-resource</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>../../launcher/src</sourceDirectory>
+    <testResources>
+      <testResource><directory>target/generated-test-config</directory></testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+        <configuration>
+          <redirectTestOutputToFile>false</redirectTestOutputToFile>
+          <trimStackTrace>false</trimStackTrace>
+          <systemPropertyVariables>
+            <glasshome.shots>${project.basedir}/../../state/render</glasshome.shots>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

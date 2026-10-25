@@ -171,6 +171,11 @@ platform dependency.
 
 ## Also in here
 
+- **[android-tv/](android-tv/README.md): Glass Home for Android TV and Google
+  TV.** A native home screen with the same look, and `atv.py`, which finds the
+  TV on your Wi-Fi, backs it up, asks before disabling the maker's ads,
+  telemetry and junk (never uninstalling), checks every step with screenshots
+  from the TV, and writes a restore script.
 - **[docs/SAMSUNG-SETTINGS.md](docs/SAMSUNG-SETTINGS.md):** turning off
   Samsung's content recognition, ad ID, promotions and autoplay, a DNS ad
   filter that kept every app working, and how to undo each.

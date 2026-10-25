@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Glass Home for Android TV: a home screen (launcher) with rotating photos, a
+  clock and a glass dock of your apps. No libraries, no network access, no
+  permissions beyond seeing which apps are installed.
+  versionCode/versionName and the SDK levels are set by build.sh.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="app.glasshome.tv">
+
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-feature android:name="android.hardware.screen.landscape" android:required="false" />
+
+    <!-- Android 11+ only shows an app the packages it declares interest in.
+         A launcher needs every app that can be opened. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+        <intent>
+            <action android:name="android.settings.SETTINGS" />
+        </intent>
+    </queries>
+
+    <application
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:banner="@drawable/banner"
+        android:allowBackup="false"
+        android:hardwareAccelerated="true"
+        android:largeHeap="false"
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:clearTaskOnLaunch="true"
+            android:stateNotNeeded="true"
+            android:excludeFromRecents="true"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|fontScale|locale|layoutDirection"
+            android:theme="@style/Home">
+            <!-- The home screen the TV opens on the Home button. -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- Also listed among the TV's apps, so it can be opened from there. -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

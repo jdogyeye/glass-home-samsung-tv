@@ -24,3 +24,7 @@ state/
 __pycache__/
 node_modules/
 .DS_Store
+
+# Android TV: launcher build output and the render test's Maven output
+android-tv/launcher/build/
+android-tv/dev/robolectric/target/
